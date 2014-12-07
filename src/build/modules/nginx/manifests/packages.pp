@@ -13,7 +13,8 @@ class nginx::packages {
   }
 
   package {[
-      'nginx'
+      'nginx',
+      'apache2-utils'
     ]:
     ensure => present,
     require => Exec['apt-get update']
