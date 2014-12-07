@@ -1,0 +1,13 @@
+nginx:
+  image: simpledrupalcloud/nginx:latest
+  hostname: nginx
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes_from:
+    - nginxdata
+nginxdata:
+  image: simpledrupalcloud/data:latest
+  hostname: nginxdata
+  volumes:
+    - /nginx/data
