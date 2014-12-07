@@ -1,22 +1,4 @@
 class nginx {
-  file { '/etc/nginx/conf.d/default.conf':
-    ensure => present,
-    content => template('nginx/default.conf.erb'),
-    mode => 644
-  }
-
-  file { '/etc/nginx/conf.d/default-ssl.conf':
-    ensure => present,
-    content => template('nginx/default-ssl.conf.erb'),
-    mode => 644
-  }
-
-  file { '/etc/nginx/nginx.conf':
-    ensure => present,
-    source => 'puppet:///modules/nginx/etc/nginx/nginx.conf',
-    mode => 644
-  }
-
   exec { 'openssl genrsa -out /root/devdockerCA.key 4096':
     timeout => 0,
     path => ['/usr/bin']
