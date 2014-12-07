@@ -12,6 +12,12 @@ class nginx {
     mode => 644
   }
 
+  file { '/etc/nginx/conf.d/default-ssl.conf':
+    ensure => present,
+    source => 'puppet:///modules/nginx/etc/nginx/conf.d/default-ssl.conf',
+    mode => 644
+  }
+
   file { '/etc/nginx/nginx.conf':
     ensure => present,
     source => 'puppet:///modules/nginx/etc/nginx/nginx.conf',
