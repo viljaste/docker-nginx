@@ -18,6 +18,7 @@ Using the `docker` command:
       -p 80:80 \
       -p 443:443 \
       --volumes-from nginxdata \
+      -e SERVER_NAME="localhost" \
       -d \
       simpledrupalcloud/nginx:dev
 

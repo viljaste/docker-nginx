@@ -6,6 +6,8 @@ nginx:
     - "443:443"
   volumes_from:
     - nginxdata
+  environment:
+    - SERVER_NAME=localhost
 nginxdata:
   image: simpledrupalcloud/data:dev
   hostname: nginxdata
