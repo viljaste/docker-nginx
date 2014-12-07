@@ -1,3 +1,3 @@
 node default {
-  include httpd
+  include nginx
 }

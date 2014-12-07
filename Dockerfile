@@ -16,7 +16,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN apt-get clean
 
-VOLUME ["/registry/data"]
+VOLUME ["/nginx/data"]
 
 EXPOSE 80
 EXPOSE 443
