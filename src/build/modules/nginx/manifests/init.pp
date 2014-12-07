@@ -11,4 +11,10 @@ class nginx {
     source => 'puppet:///modules/nginx/etc/nginx/conf.d/default.conf',
     mode => 644
   }
+
+  file { '/etc/nginx/nginx.conf':
+    ensure => present,
+    source => 'puppet:///modules/nginx/etc/nginx/nginx.conf',
+    mode => 644
+  }
 }
