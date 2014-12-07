@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name localhost;
+  server_name <%= @server_name %>;
 
   location = /50x.html {
     root /usr/share/nginx/html;
