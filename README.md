@@ -1,6 +1,6 @@
 # docker-nginx
 
-## Nginx (DEVELOPMENT BRANCH)
+## Nginx (STABLE BRANCH)
 
 ### Run the container
 
@@ -10,7 +10,7 @@ Using the `docker` command:
       --name "${CONTAINER}" \
       -h "${CONTAINER}" \
       -v /nginx/data \
-      simpledrupalcloud/data:dev
+      simpledrupalcloud/data:latest
 
     CONTAINER="nginx" && sudo docker run \
       --name "${CONTAINER}" \
@@ -19,14 +19,13 @@ Using the `docker` command:
       -p 443:443 \
       --volumes-from nginxdata \
       -d \
-      simpledrupalcloud/nginx:dev
+      simpledrupalcloud/nginx:latest
 
 Using the `fig` command
 
     TMP="$(mktemp -d)" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-nginx.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout dev \
       && sudo fig up
 
 ### Build the image
@@ -34,8 +33,7 @@ Using the `fig` command
     TMP="$(mktemp -d)" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-nginx.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout dev \
-      && sudo docker build -t simpledrupalcloud/nginx:dev . \
+      && sudo docker build -t simpledrupalcloud/nginx:latest . \
       && cd -
 
 ## Back up Nginx data
