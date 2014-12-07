@@ -3,7 +3,7 @@ class nginx::packages {
 
   file { '/etc/apt/sources.list.d/nginx.list':
     ensure => present,
-    source => 'puppet:///modules/httpd/etc/apt/sources.list.d/nginx.list',
+    source => 'puppet:///modules/nginx/etc/apt/sources.list.d/nginx.list',
     mode => 644
   }
 
