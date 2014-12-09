@@ -1,8 +1,6 @@
 # docker-nginx
 
-## Nginx (DEVELOPMENT BRANCH)
-
-### Run the container
+## Run the container
 
 Using the `docker` command:
 
@@ -30,7 +28,7 @@ Using the `fig` command
       && git checkout dev \
       && sudo fig up
 
-### Build the image
+## Build the image
 
     TMP="$(mktemp -d)" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-nginx.git "${TMP}" \
@@ -45,7 +43,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      busybox:latest tar czvf /backup/nginxdata.tar.gz /nginx/data
+      simpledrupalcloud/data:dev tar czvf /backup/nginxdata.tar.gz /nginx/data
 
 ## Restore Nginx data from a backup
 
@@ -53,7 +51,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      busybox:latest tar xzvf /backup/nginxdata.tar.gz
+      simpledrupalcloud/data:dev tar xzvf /backup/nginxdata.tar.gz
 
 ## License
 
