@@ -30,7 +30,7 @@ class nginx::ssl {
     require => Exec["openssl req -new -key /root/nginx.key -subj $subj -out /root/nginx.csr"]
   }
 
-  exec { 'cp /root/registry.crt /etc/ssl/certs/nginx.crt':
+  exec { 'cp /root/nginx.crt /etc/ssl/certs/nginx.crt':
     path => ['/bin'],
     require => Exec["openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365"]
   }
