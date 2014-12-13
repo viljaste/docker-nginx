@@ -1,5 +1,6 @@
 server {
-  listen 443 ssl;
+  listen 443;
+  server_name <%= @server_name %>
 
   location / {
     root /nginx/data;
