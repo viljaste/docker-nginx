@@ -1,42 +1,42 @@
 class nginx::ssl {
-  exec { 'openssl genrsa -out /root/devdockerCA.key 4096':
+  exec { 'openssl genrsa -out /root/nginxCA.key 4096':
     timeout => 0,
     path => ['/usr/bin']
   }
 
   $subj = "/C=US/ST=Denial/L=Springfield/O=Dis/CN=$server_name"
 
-  exec { "openssl req -x509 -new -nodes -key /root/devdockerCA.key -days 365 -subj $subj -out /root/devdockerCA.crt":
+  exec { "openssl req -x509 -new -nodes -key /root/nginxCA.key -days 365 -subj $subj -out /root/nginxCA.crt":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec['openssl genrsa -out /root/devdockerCA.key 4096']
+    require => Exec['openssl genrsa -out /root/nginxCA.key 4096']
   }
 
-  exec { 'openssl genrsa -out /root/registry.key 4096':
+  exec { 'openssl genrsa -out /root/nginx.key 4096':
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec["openssl req -x509 -new -nodes -key /root/devdockerCA.key -days 365 -subj $subj -out /root/devdockerCA.crt"]
+    require => Exec["openssl req -x509 -new -nodes -key /root/nginxCA.key -days 365 -subj $subj -out /root/nginxCA.crt"]
   }
 
-  exec { "openssl req -new -key /root/registry.key -subj $subj -out /root/registry.csr":
+  exec { "openssl req -new -key /root/nginx.key -subj $subj -out /root/nginx.csr":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec['openssl genrsa -out /root/registry.key 4096']
+    require => Exec['openssl genrsa -out /root/nginx.key 4096']
   }
 
-  exec { "openssl x509 -req -in /root/registry.csr -CA /root/devdockerCA.crt -CAkey /root/devdockerCA.key -CAcreateserial -out /root/registry.crt -days 365":
+  exec { "openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec["openssl req -new -key /root/registry.key -subj $subj -out /root/registry.csr"]
+    require => Exec["openssl req -new -key /root/nginx.key -subj $subj -out /root/nginx.csr"]
   }
 
-  exec { 'cp /root/registry.crt /etc/ssl/certs/registry.crt':
+  exec { 'cp /root/registry.crt /etc/ssl/certs/nginx.crt':
     path => ['/bin'],
-    require => Exec["openssl x509 -req -in /root/registry.csr -CA /root/devdockerCA.crt -CAkey /root/devdockerCA.key -CAcreateserial -out /root/registry.crt -days 365"]
+    require => Exec["openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365"]
   }
 
-  exec { 'cp /root/registry.key /etc/ssl/private/registry.key':
+  exec { 'cp /root/nginx.key /etc/ssl/private/nginx.key':
     path => ['/bin'],
-    require => Exec["openssl x509 -req -in /root/registry.csr -CA /root/devdockerCA.crt -CAkey /root/devdockerCA.key -CAcreateserial -out /root/registry.crt -days 365"]
+    require => Exec["openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365"]
   }
 }
