@@ -2,14 +2,12 @@ class nginx {
   require nginx::packages
   require nginx::supervisor
 
-  exec { 'mkdir -p /nginx/data':
+  exec { 'mkdir -p /nginx/{data,ssl/{certs,private}}':
     path => ['/bin']
   }
 
-  file { '/etc/nginx/conf.d/default.conf':
-    ensure => present,
-    source => 'puppet:///modules/nginx/etc/nginx/conf.d/default.conf',
-    mode => 644
+  file { '/etc/nginx/conf.d/example_ssl.conf':
+    ensure => absent
   }
 
   file { '/etc/nginx/nginx.conf':

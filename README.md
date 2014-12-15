@@ -1,8 +1,6 @@
 # docker-nginx
 
-## Nginx (STABLE BRANCH)
-
-### Run the container
+## Run the container
 
 Using the `docker` command:
 
@@ -10,6 +8,8 @@ Using the `docker` command:
       --name "${CONTAINER}" \
       -h "${CONTAINER}" \
       -v /nginx/data \
+      -v /nginx/ssl/certs \
+      -v /nginx/ssl/private \
       simpledrupalcloud/data:latest
 
     CONTAINER="nginx" && sudo docker run \
@@ -18,6 +18,7 @@ Using the `docker` command:
       -p 80:80 \
       -p 443:443 \
       --volumes-from nginxdata \
+      -e SERVER_NAME="localhost" \
       -d \
       simpledrupalcloud/nginx:latest
 
@@ -28,7 +29,7 @@ Using the `fig` command
       && cd "${TMP}" \
       && sudo fig up
 
-### Build the image
+## Build the image
 
     TMP="$(mktemp -d)" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-nginx.git "${TMP}" \
@@ -42,7 +43,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      busybox:latest tar czvf /backup/nginxdata.tar.gz /nginx/data
+      simpledrupalcloud/data:latest tar czvf /backup/nginxdata.tar.gz /nginx/data
 
 ## Restore Nginx data from a backup
 
@@ -50,7 +51,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      busybox:latest tar xzvf /backup/nginxdata.tar.gz
+      simpledrupalcloud/data:latest tar xzvf /backup/nginxdata.tar.gz
 
 ## License
 
