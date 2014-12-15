@@ -1,5 +1,7 @@
 # docker-nginx
 
+A [Docker](https://docker.com/) container for [Nginx](http://nginx.org/).
+
 ## Run the container
 
 Using the `docker` command:
