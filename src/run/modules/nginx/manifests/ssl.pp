@@ -1,42 +1,32 @@
 class nginx::ssl {
-  exec { 'openssl genrsa -out /root/nginxCA.key 4096':
+  exec { 'openssl genrsa -out /nginx/ssl/private/nginxCA.key 4096':
     timeout => 0,
     path => ['/usr/bin']
   }
 
   $subj = "/C=/ST=/L=/O=/CN=$server_name"
 
-  exec { "openssl req -x509 -new -nodes -key /root/nginxCA.key -days 365 -subj $subj -out /root/nginxCA.crt":
+  exec { "openssl req -x509 -new -nodes -key /nginx/ssl/private/nginxCA.key -days 365 -subj $subj -out /nginx/ssl/certs/nginxCA.crt":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec['openssl genrsa -out /root/nginxCA.key 4096']
+    require => Exec['openssl genrsa -out /nginx/ssl/private/nginxCA.key 4096']
   }
 
-  exec { 'openssl genrsa -out /root/nginx.key 4096':
+  exec { 'openssl genrsa -out /nginx/ssl/private/nginx.key 4096':
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec["openssl req -x509 -new -nodes -key /root/nginxCA.key -days 365 -subj $subj -out /root/nginxCA.crt"]
+    require => Exec["openssl req -x509 -new -nodes -key /nginx/ssl/private/nginxCA.key -days 365 -subj $subj -out /nginx/ssl/certs/nginxCA.crt"]
   }
 
-  exec { "openssl req -new -key /root/nginx.key -subj $subj -out /root/nginx.csr":
+  exec { "openssl req -new -key /nginx/ssl/private/nginx.key -subj $subj -out /nginx/ssl/certs/nginx.csr":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec['openssl genrsa -out /root/nginx.key 4096']
+    require => Exec['openssl genrsa -out /nginx/ssl/private/nginx.key 4096']
   }
 
-  exec { "openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365":
+  exec { "openssl x509 -req -in /nginx/ssl/certs/nginx.csr -CA /nginx/ssl/certs/nginxCA.crt -CAkey /nginx/ssl/private/nginxCA.key -CAcreateserial -out /nginx/ssl/certs/nginx.crt -days 365":
     timeout => 0,
     path => ['/usr/bin'],
-    require => Exec["openssl req -new -key /root/nginx.key -subj $subj -out /root/nginx.csr"]
-  }
-
-  exec { 'cp /root/nginx.crt /etc/ssl/certs/nginx.crt':
-    path => ['/bin'],
-    require => Exec["openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365"]
-  }
-
-  exec { 'cp /root/nginx.key /etc/ssl/private/nginx.key':
-    path => ['/bin'],
-    require => Exec["openssl x509 -req -in /root/nginx.csr -CA /root/nginxCA.crt -CAkey /root/nginxCA.key -CAcreateserial -out /root/nginx.crt -days 365"]
+    require => Exec["openssl req -new -key /nginx/ssl/private/nginx.key -subj $subj -out /nginx/ssl/certs/nginx.csr"]
   }
 }

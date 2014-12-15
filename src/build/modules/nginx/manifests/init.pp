@@ -2,7 +2,7 @@ class nginx {
   require nginx::packages
   require nginx::supervisor
 
-  exec { 'mkdir -p /nginx/data':
+  exec { 'mkdir -p /nginx/{data,ssl/{certs,private}}':
     path => ['/bin']
   }
 
