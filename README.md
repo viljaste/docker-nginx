@@ -8,6 +8,8 @@ Using the `docker` command:
       --name "${CONTAINER}" \
       -h "${CONTAINER}" \
       -v /nginx/data \
+      -v /nginx/ssl/certs \
+      -v /nginx/ssl/private \
       simpledrupalcloud/data:dev
 
     CONTAINER="nginx" && sudo docker run \

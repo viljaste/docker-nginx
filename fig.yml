@@ -13,3 +13,5 @@ nginxdata:
   hostname: nginxdata
   volumes:
     - /nginx/data
+    - /nginx/ssl/certs
+    - /nginx/ssl/private
