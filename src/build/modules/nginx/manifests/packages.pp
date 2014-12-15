@@ -4,7 +4,8 @@ class nginx::packages {
   file { '/etc/apt/sources.list.d/nginx.list':
     ensure => present,
     source => 'puppet:///modules/nginx/etc/apt/sources.list.d/nginx.list',
-    mode => 644
+    mode => 644,
+    require => Exec['/bin/bash -c "wget -q -O - http://nginx.org/keys/nginx_signing.key | apt-key add -"']
   }
 
   exec { 'apt-get update':
