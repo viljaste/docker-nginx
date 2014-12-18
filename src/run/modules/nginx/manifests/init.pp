@@ -1,5 +1,7 @@
 class nginx {
-  require nginx::ssl
+  if ! file_exists('/nginx/ssl/certs/vhost.crt') {
+    require nginx::ssl
+  }
 
   file { '/etc/nginx/conf.d/default.conf':
     ensure => present,
