@@ -45,7 +45,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      simpledrupalcloud/data:latest tar czvf /backup/nginxdata.tar.gz /nginx/data
+      simpledrupalcloud/base:latest tar czvf /backup/nginxdata.tar.gz /nginx/data
 
 ## Restore Nginx data from a backup
 
@@ -53,7 +53,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      simpledrupalcloud/data:latest tar xzvf /backup/nginxdata.tar.gz
+      simpledrupalcloud/base:latest tar xzvf /backup/nginxdata.tar.gz
 
 ## License
 
