@@ -12,9 +12,7 @@ RUN apt-get update
 RUN /src/build.sh
 RUN /src/clean.sh
 
-VOLUME ["/nginx/data"]
-VOLUME ["/nginx/ssl/certs"]
-VOLUME ["/nginx/ssl/private"]
+VOLUME ["/nginx"]
 
 EXPOSE 80
 EXPOSE 443

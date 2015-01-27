@@ -12,6 +12,4 @@ nginxdata:
   image: simpledrupalcloud/data:latest
   hostname: nginxdata
   volumes:
-    - /nginx/data
-    - /nginx/ssl/certs
-    - /nginx/ssl/private
+    - /nginx
