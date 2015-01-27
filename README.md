@@ -9,9 +9,7 @@ Using the `docker` command:
     CONTAINER="nginxdata" && sudo docker run \
       --name "${CONTAINER}" \
       -h "${CONTAINER}" \
-      -v /nginx/data \
-      -v /nginx/ssl/certs \
-      -v /nginx/ssl/private \
+      -v /nginx \
       simpledrupalcloud/data:dev
 
     CONTAINER="nginx" && sudo docker run \
@@ -47,7 +45,7 @@ Using the `fig` command
       --rm \
       --volumes-from nginxdata \
       -v $(pwd):/backup \
-      simpledrupalcloud/base:dev tar czvf /backup/nginxdata.tar.gz /nginx/data
+      simpledrupalcloud/base:dev tar czvf /backup/nginxdata.tar.gz /nginx
 
 ## Restore Nginx data from a backup
 

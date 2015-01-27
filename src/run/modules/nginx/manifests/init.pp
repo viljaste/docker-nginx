@@ -1,6 +1,10 @@
 class nginx {
-  if ! file_exists('/nginx/ssl/certs/vhost.crt') {
+  if ! file_exists('/nginx/ssl/certs/nginx.crt') {
     require nginx::ssl
+  }
+
+  exec { 'mkdir -p /nginx/data':
+    path => ['/bin']
   }
 
   file { '/etc/nginx/conf.d/default.conf':
